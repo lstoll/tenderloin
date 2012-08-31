@@ -1,14 +1,6 @@
 source :gemcutter
 
-# Gems required for the lib to even run
-gem "virtualbox", ">= 0.5.0"
-gem "net-ssh", ">= 2.0.19"
-gem "net-scp", ">= 1.0.2"
-gem "git-style-binaries", ">= 0.1.10"
-gem "json", ">= 1.2.0"
-gem "archive-tar-minitar", ">= 0.5.2"
-
-gem 'trollop', '~> 1.0'
+gemspec
 
 # Gems required for testing only. To install run
 # gem bundle test

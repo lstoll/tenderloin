@@ -5,178 +5,31 @@
 
 Gem::Specification.new do |s|
   s.name = %q{tenderloin}
-  s.version = "0.1.4"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Mitchell Hashimoto", "John Bender"]
-  s.date = %q{2010-03-09}
-  s.description = %q{Tenderloin is a tool for building and distributing virtualized development environments.}
-  s.email = ["mitchell.hashimoto@gmail.com", "john.m.bender@gmail.com"]
-  s.executables = ["tenderloin", "tenderloin-box", "tenderloin-down", "tenderloin-halt", "tenderloin-init", "tenderloin-package", "tenderloin-reload", "tenderloin-resume", "tenderloin-ssh", "tenderloin-suspend", "tenderloin-up"]
+  s.authors = ["Mitchell Hashimoto", "John Bender", "Lincoln Stoll"]
+  s.date = %q{2012-08-30}
+  s.description = %q{Tenderloin is a tool for building and distributing virtualized development environments using VMWare fusion.}
+  s.email = ["mitchell.hashimoto@gmail.com", "john.m.bender@gmail.com", "lstoll@me.com"]
+  s.executables = ["loin", "loin-box", "loin-down", "loin-halt", "loin-init", "loin-package", "loin-reload", "loin-resume", "loin-ssh", "loin-suspend", "loin-up"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.md"
   ]
-  s.files = [
-    ".gitignore",
-     "Gemfile",
-     "LICENSE",
-     "README.md",
-     "Rakefile",
-     "VERSION",
-     "bin/.gitignore",
-     "bin/tenderloin",
-     "bin/tenderloin-box",
-     "bin/tenderloin-down",
-     "bin/tenderloin-halt",
-     "bin/tenderloin-init",
-     "bin/tenderloin-package",
-     "bin/tenderloin-reload",
-     "bin/tenderloin-resume",
-     "bin/tenderloin-ssh",
-     "bin/tenderloin-suspend",
-     "bin/tenderloin-up",
-     "config/default.rb",
-     "lib/tenderloin.rb",
-     "lib/tenderloin/actions/base.rb",
-     "lib/tenderloin/actions/box/add.rb",
-     "lib/tenderloin/actions/box/destroy.rb",
-     "lib/tenderloin/actions/box/download.rb",
-     "lib/tenderloin/actions/box/unpackage.rb",
-     "lib/tenderloin/actions/runner.rb",
-     "lib/tenderloin/actions/vm/boot.rb",
-     "lib/tenderloin/actions/vm/destroy.rb",
-     "lib/tenderloin/actions/vm/down.rb",
-     "lib/tenderloin/actions/vm/export.rb",
-     "lib/tenderloin/actions/vm/forward_ports.rb",
-     "lib/tenderloin/actions/vm/halt.rb",
-     "lib/tenderloin/actions/vm/import.rb",
-     "lib/tenderloin/actions/vm/move_hard_drive.rb",
-     "lib/tenderloin/actions/vm/package.rb",
-     "lib/tenderloin/actions/vm/provision.rb",
-     "lib/tenderloin/actions/vm/reload.rb",
-     "lib/tenderloin/actions/vm/resume.rb",
-     "lib/tenderloin/actions/vm/shared_folders.rb",
-     "lib/tenderloin/actions/vm/start.rb",
-     "lib/tenderloin/actions/vm/suspend.rb",
-     "lib/tenderloin/actions/vm/up.rb",
-     "lib/tenderloin/box.rb",
-     "lib/tenderloin/busy.rb",
-     "lib/tenderloin/commands.rb",
-     "lib/tenderloin/config.rb",
-     "lib/tenderloin/downloaders/base.rb",
-     "lib/tenderloin/downloaders/file.rb",
-     "lib/tenderloin/downloaders/http.rb",
-     "lib/tenderloin/env.rb",
-     "lib/tenderloin/ssh.rb",
-     "lib/tenderloin/util.rb",
-     "lib/tenderloin/vm.rb",
-     "script/tenderloin-ssh-expect.sh",
-     "templates/Tenderfile",
-     "test/test_helper.rb",
-     "test/tenderloin/actions/base_test.rb",
-     "test/tenderloin/actions/box/add_test.rb",
-     "test/tenderloin/actions/box/destroy_test.rb",
-     "test/tenderloin/actions/box/download_test.rb",
-     "test/tenderloin/actions/box/unpackage_test.rb",
-     "test/tenderloin/actions/runner_test.rb",
-     "test/tenderloin/actions/vm/boot_test.rb",
-     "test/tenderloin/actions/vm/destroy_test.rb",
-     "test/tenderloin/actions/vm/down_test.rb",
-     "test/tenderloin/actions/vm/export_test.rb",
-     "test/tenderloin/actions/vm/forward_ports_test.rb",
-     "test/tenderloin/actions/vm/halt_test.rb",
-     "test/tenderloin/actions/vm/import_test.rb",
-     "test/tenderloin/actions/vm/move_hard_drive_test.rb",
-     "test/tenderloin/actions/vm/package_test.rb",
-     "test/tenderloin/actions/vm/provision_test.rb",
-     "test/tenderloin/actions/vm/reload_test.rb",
-     "test/tenderloin/actions/vm/resume_test.rb",
-     "test/tenderloin/actions/vm/shared_folders_test.rb",
-     "test/tenderloin/actions/vm/start_test.rb",
-     "test/tenderloin/actions/vm/suspend_test.rb",
-     "test/tenderloin/actions/vm/up_test.rb",
-     "test/tenderloin/box_test.rb",
-     "test/tenderloin/busy_test.rb",
-     "test/tenderloin/commands_test.rb",
-     "test/tenderloin/config_test.rb",
-     "test/tenderloin/downloaders/base_test.rb",
-     "test/tenderloin/downloaders/file_test.rb",
-     "test/tenderloin/downloaders/http_test.rb",
-     "test/tenderloin/env_test.rb",
-     "test/tenderloin/ssh_test.rb",
-     "test/tenderloin/util_test.rb",
-     "test/tenderloin/vm_test.rb",
-     "tenderloin.gemspec"
-  ]
-  s.homepage = %q{http://github.com/mitchellh/tenderloin}
+  s.files = %w[lib bin script templates].map {|d| Dir.glob("#{d}/**/*")}.flatten + %w[LICENCE README.md Version]
+  s.homepage = %q{http://github.com/lstoll/tenderloin}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
-  s.summary = %q{Tenderloin is a tool for building and distributing virtualized development environments.}
-  s.test_files = [
-    "test/test_helper.rb",
-     "test/tenderloin/actions/base_test.rb",
-     "test/tenderloin/actions/box/add_test.rb",
-     "test/tenderloin/actions/box/destroy_test.rb",
-     "test/tenderloin/actions/box/download_test.rb",
-     "test/tenderloin/actions/box/unpackage_test.rb",
-     "test/tenderloin/actions/runner_test.rb",
-     "test/tenderloin/actions/vm/boot_test.rb",
-     "test/tenderloin/actions/vm/destroy_test.rb",
-     "test/tenderloin/actions/vm/down_test.rb",
-     "test/tenderloin/actions/vm/export_test.rb",
-     "test/tenderloin/actions/vm/forward_ports_test.rb",
-     "test/tenderloin/actions/vm/halt_test.rb",
-     "test/tenderloin/actions/vm/import_test.rb",
-     "test/tenderloin/actions/vm/move_hard_drive_test.rb",
-     "test/tenderloin/actions/vm/package_test.rb",
-     "test/tenderloin/actions/vm/provision_test.rb",
-     "test/tenderloin/actions/vm/reload_test.rb",
-     "test/tenderloin/actions/vm/resume_test.rb",
-     "test/tenderloin/actions/vm/shared_folders_test.rb",
-     "test/tenderloin/actions/vm/start_test.rb",
-     "test/tenderloin/actions/vm/suspend_test.rb",
-     "test/tenderloin/actions/vm/up_test.rb",
-     "test/tenderloin/box_test.rb",
-     "test/tenderloin/busy_test.rb",
-     "test/tenderloin/commands_test.rb",
-     "test/tenderloin/config_test.rb",
-     "test/tenderloin/downloaders/base_test.rb",
-     "test/tenderloin/downloaders/file_test.rb",
-     "test/tenderloin/downloaders/http_test.rb",
-     "test/tenderloin/env_test.rb",
-     "test/tenderloin/ssh_test.rb",
-     "test/tenderloin/util_test.rb",
-     "test/tenderloin/vm_test.rb"
-  ]
+  s.summary = %q{Tenderloin is a tool for building and distributing virtualized development environments using VMWare fusion.}
+  s.test_files = Dir.glob("test/**/*")
 
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 3
-
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<virtualbox>, [">= 0.5.0"])
-      s.add_runtime_dependency(%q<net-ssh>, [">= 2.0.19"])
-      s.add_runtime_dependency(%q<net-scp>, [">= 1.0.2"])
-      s.add_runtime_dependency(%q<json>, [">= 1.2.0"])
-      s.add_runtime_dependency(%q<git-style-binaries>, [">= 0.1.10"])
-      s.add_runtime_dependency(%q<archive-tar-minitar>, ["= 0.5.2"])
-    else
-      s.add_dependency(%q<virtualbox>, [">= 0.5.0"])
-      s.add_dependency(%q<net-ssh>, [">= 2.0.19"])
-      s.add_dependency(%q<net-scp>, [">= 1.0.2"])
-      s.add_dependency(%q<json>, [">= 1.2.0"])
-      s.add_dependency(%q<git-style-binaries>, [">= 0.1.10"])
-      s.add_dependency(%q<archive-tar-minitar>, ["= 0.5.2"])
-    end
-  else
-    s.add_dependency(%q<virtualbox>, [">= 0.5.0"])
-    s.add_dependency(%q<net-ssh>, [">= 2.0.19"])
-    s.add_dependency(%q<net-scp>, [">= 1.0.2"])
-    s.add_dependency(%q<json>, [">= 1.2.0"])
-    s.add_dependency(%q<git-style-binaries>, [">= 0.1.10"])
-    s.add_dependency(%q<archive-tar-minitar>, ["= 0.5.2"])
-  end
+  s.add_runtime_dependency "virtualbox",            ">= 0.5.0"
+  s.add_runtime_dependency "net-ssh",               ">= 2.0.19"
+  s.add_runtime_dependency "net-scp",               ">= 1.0.2"
+  s.add_runtime_dependency "json",                  ">= 1.2.0"
+  s.add_runtime_dependency "git-style-binaries",    ">= 0.1.10"
+  s.add_runtime_dependency "archive-tar-minitar",   "= 0.5.2"
+  s.add_runtime_dependency "trollop",               "~> 1.0"
 end
-
