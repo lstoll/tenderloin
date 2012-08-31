@@ -8,6 +8,8 @@ gem "git-style-binaries", ">= 0.1.10"
 gem "json", ">= 1.2.0"
 gem "archive-tar-minitar", ">= 0.5.2"
 
+gem 'trollop', '~> 1.0'
+
 # Gems required for testing only. To install run
 # gem bundle test
 group :test do

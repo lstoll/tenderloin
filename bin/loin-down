@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+begin
+  require File.expand_path('../../.bundle/environment', __FILE__)
+rescue LoadError
+  # Fallback on rubygems
+  require "rubygems"
+end
+
+require 'git-style-binary/command'
+
+# Get library
+libdir = File.join(File.dirname(__FILE__), '..', 'lib')
+$:.unshift(libdir) unless $:.include?(libdir)
+require 'tenderloin'
+
+GitStyleBinary.command do
+  short_desc "destroys the tenderloin environment"
+  banner <<-EOS
+Usage: #{command.full_name} #{all_options_string}
+
+Destroys the tenderloin environment.
+
+EOS
+
+  run do |command|
+    Tenderloin::Commands.down
+  end
+end

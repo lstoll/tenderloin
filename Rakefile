@@ -3,11 +3,11 @@ require 'rake/testtask'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "vagrant"
-    gemspec.summary = "Vagrant is a tool for building and distributing virtualized development environments."
-    gemspec.description = "Vagrant is a tool for building and distributing virtualized development environments."
+    gemspec.name = "tenderloin"
+    gemspec.summary = "Tenderloin is a tool for building and distributing virtualized development environments."
+    gemspec.description = "Tenderloin is a tool for building and distributing virtualized development environments."
     gemspec.email = ["mitchell.hashimoto@gmail.com", "john.m.bender@gmail.com"]
-    gemspec.homepage = "http://github.com/mitchellh/vagrant"
+    gemspec.homepage = "http://github.com/mitchellh/tenderloin"
     gemspec.authors = ["Mitchell Hashimoto", "John Bender"]
 
     gemspec.add_dependency('virtualbox', '>= 0.5.0')
@@ -33,7 +33,7 @@ begin
   require 'yard'
   YARD::Rake::YardocTask.new do |t|
     t.options = ['--main', 'README.md', '--markup', 'markdown']
-    t.options += ['--title', 'Vagrant Developer Documentation']
+    t.options += ['--title', 'Tenderloin Developer Documentation']
   end
 rescue LoadError
   puts "Yard not available. Install it with: gem install yard"

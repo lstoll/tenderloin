@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+begin
+  require File.expand_path('../../.bundle/environment', __FILE__)
+rescue LoadError
+  # Fallback on rubygems
+  require "rubygems"
+end
+
+require 'git-style-binary/command'
+
+# Get library
+libdir = File.join(File.dirname(__FILE__), '..', 'lib')
+$:.unshift(libdir) unless $:.include?(libdir)
+require 'tenderloin'
+
+GitStyleBinary.command do
+  short_desc "create the tenderloin environment"
+  banner <<-EOS
+Usage: #{command.full_name} #{all_options_string}
+
+Create the tenderloin environment if it doesn't exist,
+otherwise start the tenderloin environment if its not
+already running.
+
+EOS
+
+  run do |command|
+    Tenderloin::Commands.up
+  end
+end
