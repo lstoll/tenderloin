@@ -1,53 +1,39 @@
 # Tenderloin
 
-* Website: [http://tenderloinup.com](http://tenderloinup.com)
-* IRC: `#tenderloin` on Freenode
-* Mailng list: [Google Groups](http://groups.google.com/group/tenderloin-up)
-
 Tenderloin is a tool for building and distributing virtualized development environments.
 
-By providing automated creation and provisioning of virtual machines using [Sun’s VirtualBox](http://www.virtualbox.org),
-Tenderloin provides the tools to create and configure lightweight, reproducible, and portable
-virtual environments. For more information, see the part of the getting started guide
-on ”[Why Tenderloin?](http://tenderloinup.com/docs/getting-started/index.html)”
+It is based on [Vagrant](http://vagrantup.com), specifically the 0.1.4 release. This was
+the simplest, and provided a good starting point
+
+It is designed to use VMWare Fusion as the underlying provider. You will need Fusion 5.
 
 ## Quick Start
 
-First, make sure your development machine has [VirtualBox](http://www.virtualbox.org)
-installed. The setup from that point forward is very easy, since Tenderloin is simply
-a rubygem.
-
-    sudo gem install tenderloin
+    gem install tenderloin
 
 To build your first virtual environment:
 
-    tenderloin init
-    tenderloin box add base http://files.tenderloinup.com/base.box
-    tenderloin up
+    loin init
+    loin box add base http://s3.lstoll.net/<todo>.box
+    loin up
 
-## Getting Started Guide and Video
+## Builsding base boxes
 
-To learn how to build a fully functional rails development environment, view the
-[getting started guide](http://tenderloinup.com/getting-started/index.html).
+Currently base boxes are built manually. The process:
 
-There is also a fairly short (12 minute) [getting started video](http://vimeo.com/9976342) which
-explains how to build a fully functional LAMP development environment, which
-covers a few parts of Tenderloin in more detail than the website guide.
+* Create image in Fusion
+* Set user and password to 'tenderloin'
+* Set sudo to not prompt for password
+* Install VMWare additions
+* Ensure you have a single .vmdk disk. If not, convert with:
 
-## Installing the Gem from Git
+    /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -r Virtual\ Disk.vmdk -t 0 precise64.vmdk
 
-If you want the bleeding edge version of Tenderloin, we try to keep master pretty stable
-and you're welcome to give it a shot. The following is an example showing how to do this:
+* Compress and shrink the disk
 
-    rake build
-    sudo rake install
+    /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -d precise64.vmdk
+    /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -k precise64.vmdk
 
-## Contributing to Tenderloin
+* Take the vmdk and a base Tenderfile, and tar them up as a .box
 
-To hack on tenderloin, you'll need [bundler](http://github.com/carlhuda/bundler) which can
-be installed with a simple `sudo gem install bundler`. Afterwords, do the following:
-
-    bundle install
-    rake
-
-This will run the test suite, which should come back all green! Then you're good to go!
+    tar -cvf precise64.box Tenderfile precise64.vmdk
