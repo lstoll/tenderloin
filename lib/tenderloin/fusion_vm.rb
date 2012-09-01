@@ -6,6 +6,14 @@ module Tenderloin
       @vmx = vmx
     end
 
+    def run(cmd, opts='')
+      res = `#{VMRUN} #{cmd} #{@vmx} #{opts}`
+      unless $? == 0
+        raise "Error running vmrun command #{cmd}: " + res
+      end
+      res
+    end
+
     def start_fusion
       # Ensure fusion is running.
       `if [[ -z $(pgrep 'VMware Fusion') ]]; then open /Applications/VMware\\ Fusion.app ; sleep 5 ; fi`
@@ -18,33 +26,53 @@ module Tenderloin
 
     def start(opts = {})
       gui_opt = opts[:headless] == true ? "nogui" : "gui"
-      res = `#{VMRUN} start #{@vmx} #{gui_opt}`
-      unless $? == 0
-        raise "Error starting VM: " + res
-      end
+      run('start', gui_opt)
     end
 
     def stop(opts = {})
       hard_opt = opts[:force] == true ? "hard" : "soft"
-      res = `#{VMRUN} stop #{@vmx} #{hard_opt}`
-      unless $? == 0
-        raise "Error stopping VM: " + res
-      end
+      run 'stop', hard_opt
     end
 
     def delete()
-      res = `#{VMRUN} deleteVM #{@vmx}`
-      unless $? == 0
-        raise "Error deleting VM: " + res
-      end
+      run 'deleteVM'
     end
 
-    def self.get_guest_var(var)
-      `#{VMRUN} readVariable #{@vmx} guestVar ip`
+    def get_guest_var(var)
+      run 'readVariable', 'guestVar ' + var
     end
 
     def ip
-      @ip ||= get_guest_var('ip').strip
+      ip = get_guest_var('ip').strip
+      unless ip =~ /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/
+        mac_address = VMXFile.load(@vmx)["ethernet0.generatedAddress"]
+        ip = dhcp_leases[mac_address]
+      end
+      ip
+    end
+
+    def enable_shared_folders
+      run 'enableSharedFolders'
+    end
+
+    def share_folder(name, hostpath)
+      run 'addSharedFolder', "#{name} #{hostpath}"
+    end
+
+    def dhcp_leases
+      mac_ip = {}
+      curLeaseIp = nil
+      Dir['/var/db/vmware/vmnet-dhcpd*.leases'].each do |f|
+        File.open(f).each do |line|
+          case line
+          when /lease (.*) \{/
+            curLeaseIp = $1
+          when /hardware ethernet (.*);/
+            mac_ip[$1] = curLeaseIp
+          end
+        end
+      end
+      mac_ip
     end
   end
 end
