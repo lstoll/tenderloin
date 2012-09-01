@@ -57,7 +57,6 @@ module Tenderloin
       attr_accessor :username
       attr_accessor :password
       attr_accessor :host
-      attr_accessor :forwarded_port_key
       attr_accessor :max_tries
       attr_accessor :timeout
     end
@@ -66,20 +65,10 @@ module Tenderloin
       attr_accessor :box
       attr_accessor :box_vmx
       attr_accessor :project_directory
-      attr_reader :forwarded_ports
       attr_accessor :hd_location
 
 
       def initialize
-        @forwarded_ports = {}
-      end
-
-      def forward_port(name, guestport, hostport, protocol="TCP")
-        forwarded_ports[name] = {
-          :guestport  => guestport,
-          :hostport   => hostport,
-          :protocol   => protocol
-        }
       end
 
       def hd_location=(val)

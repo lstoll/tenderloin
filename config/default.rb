@@ -7,12 +7,10 @@ Tenderloin::Config.run do |config|
   config.ssh.username = "tenderloin"
   config.ssh.password = "tenderloin"
   # config.ssh.host = "localhost"
-  config.ssh.forwarded_port_key = "ssh"
   config.ssh.max_tries = 10
   config.ssh.timeout = 10
 
   config.vm.box_vmx = "box.vmx"
-  # config.vm.base_mac = "0800279C2E42"
   config.vm.project_directory = "/tenderloin"
 
   config.package.name = 'tenderloin'
