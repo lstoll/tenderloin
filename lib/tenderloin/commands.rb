@@ -87,42 +87,6 @@ error
         Env.persisted_vm.execute!(Actions::VM::Halt)
       end
 
-      # Suspend a running tenderloin instance. This suspends the instance, saving
-      # the state of the VM and "pausing" it. The instance can be resumed
-      # again with {resume}.
-      #
-      # This command requires that an instance already be brought up with
-      # `tenderloin up`.
-      def suspend
-        Env.load!
-        Env.require_persisted_vm
-        Env.persisted_vm.suspend
-      end
-
-      # Resume a running tenderloin instance. This resumes an already suspended
-      # instance (from {suspend}).
-      #
-      # This command requires that an instance already be brought up with
-      # `tenderloin up`.
-      def resume
-        Env.load!
-        Env.require_persisted_vm
-        Env.persisted_vm.resume
-      end
-
-      # Export and package the current vm
-      #
-      # This command requires that an instance be powered off
-      def package(out_path=nil, include_files=[])
-        Env.load!
-        Env.require_persisted_vm
-        error_and_exit(<<-error) unless Env.persisted_vm.powered_off?
-The tenderloin virtual environment you are trying to package must be powered off
-error
-
-        Env.persisted_vm.package(out_path, include_files)
-      end
-
       # Manages the `tenderloin box` command, allowing the user to add
       # and remove boxes. This single command, given an array, determines
       # which action to take and calls the respective action method
