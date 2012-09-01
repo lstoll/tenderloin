@@ -12,8 +12,8 @@ module Tenderloin
         Kernel.exec "#{SCRIPT} #{options[:username]} #{options[:password]} #{options[:host]} #{port(opts)}".strip
       end
 
-      def execute
-        Net::SSH.start(Tenderloin.config.ssh.host, Tenderloin.config[:ssh][:username], :port => port, :password => Tenderloin.config[:ssh][:password]) do |ssh|
+      def execute(ip)
+        Net::SSH.start(ip, Tenderloin.config[:ssh][:username], :port => port, :password => Tenderloin.config[:ssh][:password]) do |ssh|
           yield ssh
         end
       end
@@ -25,11 +25,11 @@ module Tenderloin
         end
       end
 
-      def up?
+      def up?(ip)
         check_thread = Thread.new do
           begin
             Thread.current[:result] = false
-            Net::SSH.start(Tenderloin.config.ssh.host, Tenderloin.config.ssh.username, :port => port, :password => Tenderloin.config.ssh.password, :timeout => Tenderloin.config.ssh.timeout) do |ssh|
+            Net::SSH.start(ip, Tenderloin.config.ssh.username, :port => port, :password => Tenderloin.config.ssh.password, :timeout => Tenderloin.config.ssh.timeout) do |ssh|
               Thread.current[:result] = true
             end
           rescue Errno::ECONNREFUSED, Net::SSH::Disconnect
@@ -42,7 +42,7 @@ module Tenderloin
       end
 
       def port(opts={})
-        opts[:port] || Tenderloin.config.vm.forwarded_ports[Tenderloin.config.ssh.forwarded_port_key][:hostport]
+        opts[:port] || 22
       end
     end
   end

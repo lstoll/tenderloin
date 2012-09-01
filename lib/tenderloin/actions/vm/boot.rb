@@ -33,9 +33,10 @@ error
 
           Tenderloin.config[:ssh][:max_tries].to_i.times do |i|
             logger.info "Trying to connect (attempt ##{i+1} of #{Tenderloin.config[:ssh][:max_tries]})..."
+            ip = @runner.fusion_vm.ip
 
-            if Tenderloin::SSH.up?
-              logger.info "VM booted and ready for use!"
+            if ip && Tenderloin::SSH.up?(ip)
+              logger.info "VM booted and ready for use on IP: " + ip
               return true
             end
 
