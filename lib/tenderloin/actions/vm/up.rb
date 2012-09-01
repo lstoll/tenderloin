@@ -36,7 +36,7 @@ msg
         end
 
         def setup_uuid_mac
-          logger.info "Resetting VMX UUID and MAC..."
+          logger.info "Resetting VMX UUID, MAC and Display Name..."
 
           VMXFile.with_vmx_data(@runner.vmx_path) do |data|
             data.delete "ethernet0.addressType"
@@ -46,6 +46,7 @@ msg
             data.delete "ethernet1.generatedAddress"
             data.delete "ethernet0.generatedAddressOffset"
             data.delete "ethernet1.generatedAddressOffset"
+            data['displayName'] = "tenderloin-" + @runner.vm_id
           end
         end
       end

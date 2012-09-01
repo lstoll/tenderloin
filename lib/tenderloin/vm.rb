@@ -28,6 +28,10 @@ module Tenderloin
       File.join(Tenderloin::Env.vms_path, @vm_id, @vm_id + ".vmx")
     end
 
+    def fusion_vm
+      @fusion_vm ||= FusionVM.new(vmx_path) if vmx_path
+    end
+
     def start
       return if running?
 
@@ -35,7 +39,7 @@ module Tenderloin
     end
 
     def running?
-      VMrun.running(vmx_path)
+      @fusion_vm.running?
     end
 
     def destroy
