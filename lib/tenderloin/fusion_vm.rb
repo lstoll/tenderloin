@@ -7,11 +7,18 @@ module Tenderloin
     end
 
     def run(cmd, opts='')
-      res = `#{VMRUN} #{cmd} #{@vmx} #{opts}`
-      unless $? == 0
-        raise "Error running vmrun command #{cmd}: " + res
+      retrycount = 0
+      while true
+        res = `#{VMRUN} #{cmd} #{@vmx} #{opts}`
+        if $? == 0
+          return res
+        else
+          if res =~ /VMware Tools are not running/
+            sleep 1; next unless retrycount > 10
+          end
+          raise "Error running vmrun command #{cmd}: " + res
+        end
       end
-      res
     end
 
     def start_fusion
