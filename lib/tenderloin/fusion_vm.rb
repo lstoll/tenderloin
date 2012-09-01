@@ -25,6 +25,14 @@ module Tenderloin
       end
     end
 
+    def stop(opts = {})
+      hard_opt = opts[:force] == true ? "hard" : "soft"
+      res = `#{VMRUN} stop #{@vmx} #{hard_opt}`
+      unless $? == 0
+        raise "Error stopping VM: " + res
+      end
+    end
+
     def self.get_guest_var(var)
       `#{VMRUN} readVariable #{@vmx} guestVar ip`
     end

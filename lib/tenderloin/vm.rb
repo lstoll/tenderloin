@@ -39,7 +39,7 @@ module Tenderloin
     end
 
     def running?
-      @fusion_vm.running?
+      fusion_vm.running?
     end
 
     def destroy

@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Tenderloin
   module Actions
     module VM
@@ -5,7 +7,7 @@ module Tenderloin
         def execute!
           @runner.invoke_around_callback(:destroy) do
             logger.info "Destroying VM and associated drives..."
-            @runner.vm.destroy(:destroy_image => true)
+            FileUtils.rm_rf(File.dirname(@runner.vmx_path))
           end
         end
       end
