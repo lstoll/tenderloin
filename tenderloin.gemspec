@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.summary = %q{Tenderloin is a tool for building and distributing virtualized development environments using VMWare fusion.}
   s.test_files = Dir.glob("test/**/*")
 
-  s.add_runtime_dependency "virtualbox",            ">= 0.5.0"
+  s.add_runtime_dependency "fission",               "~> 0.4.0"
   s.add_runtime_dependency "net-ssh",               ">= 2.0.19"
   s.add_runtime_dependency "net-scp",               ">= 1.0.2"
   s.add_runtime_dependency "json",                  ">= 1.2.0"

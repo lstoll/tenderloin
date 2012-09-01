@@ -2,21 +2,20 @@ module Tenderloin
   class VM < Actions::Runner
     include Tenderloin::Util
 
-    attr_accessor :vm
+    attr_accessor :vm_id
     attr_accessor :from
 
     class << self
       # Finds a virtual machine by a given UUID and either returns
       # a Tenderloin::VM object or returns nil.
       def find(uuid)
-        vm = VirtualBox::VM.find(uuid)
-        return nil if vm.nil?
-        new(vm)
+        # TODO - just validate the existence - there's no 'loading' needed
+        new(uuid) if File.exists? File.join(Tenderloin::Env.vms_path, uuid, uuid + ".vmx")
       end
     end
 
     def initialize(vm=nil)
-      @vm = vm
+      @vm_id = vm
     end
 
     def package(out_path, include_files=[])
@@ -25,10 +24,18 @@ module Tenderloin
       execute!
     end
 
+    def vmx_path
+      File.join(Tenderloin::Env.vms_path, @vm_id, @vm_id + ".vmx")
+    end
+
     def start
-      return if @vm.running?
+      return if running?
 
       execute!(Actions::VM::Start)
+    end
+
+    def running?
+      VMrun.running(vmx_path)
     end
 
     def destroy

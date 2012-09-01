@@ -5,7 +5,7 @@ module Tenderloin
         def prepare
           # Start is a "meta-action" so it really just queues up a bunch
           # of other actions in its place:
-          steps = [ForwardPorts, SharedFolders, Boot]
+          steps = [SharedFolders, Boot]
 
           steps.each do |action_klass|
             @runner.add_action(action_klass)

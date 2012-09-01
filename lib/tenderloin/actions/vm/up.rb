@@ -16,7 +16,7 @@ msg
 
           # Up is a "meta-action" so it really just queues up a bunch
           # of other actions in its place:
-          steps = [Import, ForwardPorts, SharedFolders, Boot]
+          steps = [Import, SharedFolders, Boot]
           steps << Provision if Tenderloin.config.chef.enabled
           steps.insert(0, MoveHardDrive) if Tenderloin.config.vm.hd_location
 
@@ -27,18 +27,26 @@ msg
 
         def after_import
           persist
-          setup_mac_address
+          setup_uuid_mac
         end
 
         def persist
-          logger.info "Persisting the VM UUID (#{@runner.vm.uuid})..."
-          Env.persist_vm(@runner.vm)
+          logger.info "Persisting the VM UUID (#{@runner.vm_id})..."
+          Env.persist_vm(@runner.vm_id)
         end
 
-        def setup_mac_address
-          logger.info "Matching MAC addresses..."
-          @runner.vm.nics.first.macaddress = Tenderloin.config[:vm][:base_mac]
-          @runner.vm.save(true)
+        def setup_uuid_mac
+          logger.info "Resetting VMX UUID and MAC..."
+
+          VMXFile.with_vmx_data(@runner.vmx_path) do |data|
+            data.delete "ethernet0.addressType"
+            data.delete "uuid.location"
+            data.delete "uuid.bios"
+            data.delete "ethernet0.generatedAddress"
+            data.delete "ethernet1.generatedAddress"
+            data.delete "ethernet0.generatedAddressOffset"
+            data.delete "ethernet1.generatedAddressOffset"
+          end
         end
       end
     end

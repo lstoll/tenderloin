@@ -19,6 +19,8 @@ module Tenderloin
         end
 
         def before_boot
+          puts "NOOP - Shared Folders Before Boot"
+          return
           logger.info "Creating shared folders metadata..."
 
           shared_folders.each do |name, hostpath, guestpath|
@@ -32,6 +34,8 @@ module Tenderloin
         end
 
         def after_boot
+          puts "NOOP - Shared Folders After Boot"
+          return
           logger.info "Mounting shared folders..."
 
           Tenderloin::SSH.execute do |ssh|

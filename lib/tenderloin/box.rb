@@ -113,13 +113,11 @@ module Tenderloin
       @name = name
     end
 
-    # Returns path to the OVF file of the box. The OVF file is an open
-    # virtual machine file which contains specifications of the exported
-    # virtual machine this box contains.
+    # Returns path to the vmx file of the box. This contains the config
     #
     # @return [String]
-    def ovf_file
-      File.join(directory, Tenderloin.config.vm.box_ovf)
+    def vmx_file
+      File.join(directory, Tenderloin.config.vm.box_vmx)
     end
 
     # Begins the process of adding a box to the tenderloin installation. This

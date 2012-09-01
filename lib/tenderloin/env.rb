@@ -18,6 +18,7 @@ module Tenderloin
       def home_path; File.expand_path(Tenderloin.config.tenderloin.home); end
       def tmp_path; File.join(home_path, "tmp"); end
       def boxes_path; File.join(home_path, "boxes"); end
+      def vms_path; File.join(home_path, "vms"); end
 
       def load!
         load_root_path!
@@ -80,9 +81,9 @@ module Tenderloin
         @@persisted_vm = nil
       end
 
-      def persist_vm(vm)
+      def persist_vm(vm_id)
         File.open(dotfile_path, 'w+') do |f|
-          f.write(vm.uuid)
+          f.write(vm_id)
         end
       end
 

@@ -64,12 +64,10 @@ module Tenderloin
 
     class VMConfig < Base
       attr_accessor :box
-      attr_accessor :box_ovf
-      attr_accessor :base_mac
+      attr_accessor :box_vmx
       attr_accessor :project_directory
       attr_reader :forwarded_ports
       attr_accessor :hd_location
-      attr_accessor :disk_image_format
 
 
       def initialize
