@@ -26,11 +26,11 @@ module Tenderloin
           logger.info "Creating shared folders metadata..."
 
           shared_folders.each do |name, hostpath, guestpath|
-            @runner.fusion_vm.enable_shared_folders
             @runner.fusion_vm.share_folder(name, hostpath)
+            @runner.fusion_vm.enable_shared_folders
           end
 
-          logger.info "Mounting shared folders..."
+          logger.info "Linking shared folders..."
 
           Tenderloin::SSH.execute(@runner.fusion_vm.ip) do |ssh|
             shared_folders.each do |name, hostpath, guestpath|
@@ -41,25 +41,6 @@ module Tenderloin
           end
         end
 
-        def mount_folder(ssh, name, guestpath, sleeptime=5)
-          # Note: This method seems pretty OS-specific and could also use
-          # some configuration options. For now its duct tape and "works"
-          # but should be looked at in the future.
-          attempts = 0
-
-          while true
-            result = ssh.exec!("sudo mount -t vboxsf #{name} #{guestpath}") do |ch, type, data|
-              # net/ssh returns the value in ch[:result] (based on looking at source)
-              ch[:result] = !!(type == :stderr && data =~ /No such device/i)
-            end
-
-            break unless result
-
-            attempts += 1
-            raise ActionException.new("Failed to mount shared folders. vboxsf was not available.") if attempts >= 10
-            sleep sleeptime
-          end
-        end
       end
     end
   end
