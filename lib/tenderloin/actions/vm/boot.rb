@@ -25,7 +25,7 @@ error
         def boot
           logger.info "Booting VM..."
 
-          @runner.fusion_vm.start(:headless => false)
+          @runner.fusion_vm.start(:headless => true)
         end
 
         def wait_for_boot(sleeptime=5)

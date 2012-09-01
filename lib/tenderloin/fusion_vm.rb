@@ -17,7 +17,6 @@ module Tenderloin
     end
 
     def start(opts = {})
-      start_fusion
       gui_opt = opts[:headless] == true ? "nogui" : "gui"
       res = `#{VMRUN} start #{@vmx} #{gui_opt}`
       unless $? == 0
@@ -33,12 +32,19 @@ module Tenderloin
       end
     end
 
+    def delete()
+      res = `#{VMRUN} deleteVM #{@vmx}`
+      unless $? == 0
+        raise "Error deleting VM: " + res
+      end
+    end
+
     def self.get_guest_var(var)
       `#{VMRUN} readVariable #{@vmx} guestVar ip`
     end
 
     def ip
-      get_guest_var('ip')
+      @ip ||= get_guest_var('ip').strip
     end
   end
 end
