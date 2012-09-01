@@ -19,30 +19,23 @@ module Tenderloin
         end
 
         def before_boot
-          puts "NOOP - Shared Folders Before Boot"
-          return
-          logger.info "Creating shared folders metadata..."
 
-          shared_folders.each do |name, hostpath, guestpath|
-            folder = VirtualBox::SharedFolder.new
-            folder.name = name
-            folder.hostpath = hostpath
-            @runner.vm.shared_folders << folder
-          end
-
-          @runner.vm.save(true)
         end
 
         def after_boot
-          puts "NOOP - Shared Folders After Boot"
-          return
+          logger.info "Creating shared folders metadata..."
+
+          shared_folders.each do |name, hostpath, guestpath|
+            @runner.fusion_vm.enable_shared_folders
+            @runner.fusion_vm.share_folder(name, hostpath)
+          end
+
           logger.info "Mounting shared folders..."
 
-          Tenderloin::SSH.execute do |ssh|
+          Tenderloin::SSH.execute(@runner.fusion_vm.ip) do |ssh|
             shared_folders.each do |name, hostpath, guestpath|
               logger.info "-- #{name}: #{guestpath}"
-              ssh.exec!("sudo mkdir -p #{guestpath}")
-              mount_folder(ssh, name, guestpath)
+              ssh.exec!("sudo ln -s /mnt/hgfs/#{name} #{guestpath}")
               ssh.exec!("sudo chown #{Tenderloin.config.ssh.username} #{guestpath}")
             end
           end
