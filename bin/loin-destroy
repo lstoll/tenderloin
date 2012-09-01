@@ -23,6 +23,6 @@ Destroys the tenderloin environment.
 EOS
 
   run do |command|
-    Tenderloin::Commands.down
+    Tenderloin::Commands.destroy
   end
 end

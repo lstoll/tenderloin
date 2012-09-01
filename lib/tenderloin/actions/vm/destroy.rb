@@ -5,6 +5,7 @@ module Tenderloin
     module VM
       class Destroy < Base
         def execute!
+          @runner.execute!(Halt) if @runner.running?
           @runner.invoke_around_callback(:destroy) do
             logger.info "Destroying VM and associated drives..."
             @runner.fusion_vm.delete

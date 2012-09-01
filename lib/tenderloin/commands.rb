@@ -46,7 +46,7 @@ error
       #
       # This command requires that an instance already be brought up with
       # `tenderloin up`.
-      def down
+      def destroy
         Env.load!
         Env.require_persisted_vm
         Env.persisted_vm.destroy

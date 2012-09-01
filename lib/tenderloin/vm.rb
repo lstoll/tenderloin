@@ -43,7 +43,7 @@ module Tenderloin
     end
 
     def destroy
-      execute!(Actions::VM::Down)
+      execute!(Actions::VM::Destroy)
     end
 
     def suspend
