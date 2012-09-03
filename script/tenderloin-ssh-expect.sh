@@ -13,6 +13,7 @@ if { $port != "" } {
 
 spawn ssh $port_option -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $uname@$host
 
+set timeout 30
 expect "*password: " {
   send "$password\r"
 } timeout {

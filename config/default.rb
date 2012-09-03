@@ -8,7 +8,7 @@ Tenderloin::Config.run do |config|
   config.ssh.password = "tenderloin"
   # config.ssh.host = "localhost"
   config.ssh.max_tries = 10
-  config.ssh.timeout = 10
+  config.ssh.timeout = 30
 
   config.vm.box_vmx = "box.vmx"
   config.vm.project_directory = "/tenderloin"
