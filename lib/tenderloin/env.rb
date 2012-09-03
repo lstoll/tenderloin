@@ -1,6 +1,6 @@
 module Tenderloin
   class Env
-    ROOTFILE_NAME = "Tenderfile"
+    BOXFILE_NAME = "Tenderfile"
     HOME_SUBDIRS = ["tmp", "boxes"]
 
     # Initialize class variables used
@@ -14,7 +14,9 @@ module Tenderloin
       def box; @@box; end
       def persisted_vm; @@persisted_vm; end
       def root_path; @@root_path; end
-      def dotfile_path;File.join(root_path, Tenderloin.config.tenderloin.dotfile_name); end
+      def dotfile_path
+        File.join(root_path, $ROOTFILE_NAME + ".loinstate")
+      end
       def home_path; File.expand_path(Tenderloin.config.tenderloin.home); end
       def tmp_path; File.join(home_path, "tmp"); end
       def boxes_path; File.join(home_path, "boxes"); end
@@ -31,8 +33,8 @@ module Tenderloin
       def load_config!
         # Prepare load paths for config files
         load_paths = [File.join(PROJECT_ROOT, "config", "default.rb")]
-        load_paths << File.join(box.directory, ROOTFILE_NAME) if box
-        load_paths << File.join(root_path, ROOTFILE_NAME) if root_path
+        load_paths << File.join(box.directory, BOXFILE_NAME) if box
+        load_paths << File.join(root_path, $ROOTFILE_NAME) if root_path
 
         # Then clear out the old data
         Config.reset!
@@ -95,7 +97,7 @@ module Tenderloin
         # researched.
         return false if path.to_s == '/' || path.to_s =~ /^[A-Z]:\.$/
 
-        file = "#{path}/#{ROOTFILE_NAME}"
+        file = "#{path}/#{$ROOTFILE_NAME}"
         if File.exist?(file)
           @@root_path = path.to_s
           return true
@@ -107,9 +109,9 @@ module Tenderloin
       def require_root_path
         if !root_path
           error_and_exit(<<-msg)
-A `#{ROOTFILE_NAME}` was not found! This file is required for tenderloin to run
+A `#{$ROOTFILE_NAME}` was not found! This file is required for tenderloin to run
 since it describes the expected environment that tenderloin is supposed
-to manage. Please create a #{ROOTFILE_NAME} and place it in your project
+to manage. Please create a #{$ROOTFILE_NAME} and place it in your project
 root.
 msg
         end
@@ -144,7 +146,7 @@ msg
 The task you're trying to run requires that the tenderloin environment
 already be created, but unfortunately this tenderloin still appears to
 have no box! You can setup the environment by setting up your
-#{ROOTFILE_NAME} and running `tenderloin up`
+#{$ROOTFILE_NAME} and running `tenderloin up`
 error
           return
         end

@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.date = %q{2012-08-30}
   s.description = %q{Tenderloin is a tool for building and distributing virtualized development environments using VMWare fusion.}
   s.email = ["mitchell.hashimoto@gmail.com", "john.m.bender@gmail.com", "lstoll@me.com"]
-  s.executables = ["loin", "loin-box", "loin-down", "loin-halt", "loin-init", "loin-package", "loin-reload", "loin-resume", "loin-ssh", "loin-suspend", "loin-up"]
+  s.executables = ["loin"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.md"
@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "net-ssh",               ">= 2.0.19"
   s.add_runtime_dependency "net-scp",               ">= 1.0.2"
   s.add_runtime_dependency "json",                  ">= 1.2.0"
-  s.add_runtime_dependency "git-style-binaries",    ">= 0.1.10"
   s.add_runtime_dependency "archive-tar-minitar",   "= 0.5.2"
-  s.add_runtime_dependency "trollop",               "~> 1.0"
+  s.add_runtime_dependency "thor"
 end

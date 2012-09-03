@@ -9,4 +9,5 @@ _site/*
 *.org
 .yardoc/
 doc/
-/.tenderloin
+*.loinstate
+example.loin

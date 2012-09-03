@@ -12,16 +12,16 @@ module Tenderloin
       # begin using tenderloin. The configuration file contains some documentation
       # to get you started.
       def init
-        rootfile_path = File.join(Dir.pwd, Env::ROOTFILE_NAME)
+        rootfile_path = File.join(Dir.pwd, $ROOTFILE_NAME)
         if File.exist?(rootfile_path)
           error_and_exit(<<-error)
-It looks like this directory is already setup for tenderloin! (A #{Env::ROOTFILE_NAME}
+It looks like this directory is already setup for tenderloin! (A #{$ROOTFILE_NAME}
 already exists.)
 error
         end
 
         # Copy over the rootfile template into this directory
-        FileUtils.cp(File.join(PROJECT_ROOT, "templates", Env::ROOTFILE_NAME), rootfile_path)
+        FileUtils.cp(File.join(PROJECT_ROOT, "templates", $ROOTFILE_NAME), rootfile_path)
       end
 
       # Bring up a tenderloin instance. This handles everything from importing

@@ -1,15 +1,5 @@
 #!/usr/bin/env ruby
-begin
-  require File.expand_path('../../.bundle/environment', __FILE__)
-rescue LoadError
-  # Fallback on rubygems
-  require "rubygems"
-end
 
-require 'git-style-binary/command'
+require 'tenderloin'
 
-GitStyleBinary.primary do
-  version "0.1.4"
-
-  run { educate }
-end
+Tenderloin::CLI.start(ARGV)
