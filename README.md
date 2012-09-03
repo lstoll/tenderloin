@@ -17,6 +17,9 @@ To build your first virtual environment:
     loin box add base http://s3.lstoll.net/<todo>.box
     loin up
 
+The file describing your VM is called 'Tenderfile', but you can optionally change this with
+the -f flag, to allow multiple VM descriptions in the same place.
+
 ## Builsding base boxes
 
 Currently base boxes are built manually. The process:

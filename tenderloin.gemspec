@@ -14,10 +14,10 @@ Gem::Specification.new do |s|
   s.email = ["mitchell.hashimoto@gmail.com", "john.m.bender@gmail.com", "lstoll@me.com"]
   s.executables = ["loin"]
   s.extra_rdoc_files = [
-    "LICENSE",
+    "LICENCE",
      "README.md"
   ]
-  s.files = %w[lib bin script templates].map {|d| Dir.glob("#{d}/**/*")}.flatten + %w[LICENCE README.md Version]
+  s.files = %w[lib bin script templates config].map {|d| Dir.glob("#{d}/**/*")}.flatten + %w[LICENCE README.md Version]
   s.homepage = %q{http://github.com/lstoll/tenderloin}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
@@ -25,7 +25,6 @@ Gem::Specification.new do |s|
   s.summary = %q{Tenderloin is a tool for building and distributing virtualized development environments using VMWare fusion.}
   s.test_files = Dir.glob("test/**/*")
 
-  s.add_runtime_dependency "fission",               "~> 0.4.0"
   s.add_runtime_dependency "net-ssh",               ">= 2.0.19"
   s.add_runtime_dependency "net-scp",               ">= 1.0.2"
   s.add_runtime_dependency "json",                  ">= 1.2.0"

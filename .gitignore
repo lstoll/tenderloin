@@ -11,3 +11,4 @@ _site/*
 doc/
 *.loinstate
 example.loin
+/*.gem
