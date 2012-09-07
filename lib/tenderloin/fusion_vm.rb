@@ -63,6 +63,11 @@ module Tenderloin
     end
 
     def share_folder(name, hostpath)
+      # Try and clean up first, to handle path changes.
+      begin
+        run 'removeSharedFolder', "#{name}"
+      rescue
+      end
       run 'addSharedFolder', "#{name} #{hostpath}"
     end
 

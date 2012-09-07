@@ -4,8 +4,8 @@ module Tenderloin
       class Reload < Base
         def prepare
           steps = [SharedFolders, Boot]
-          steps.unshift(Halt) if @runner.vm.running?
-          steps << Provision if Tenderloin.config.chef.enabled
+          steps.unshift(Halt) if @runner.fusion_vm.running?
+          steps << Provision if Tenderloin.config.provisioning.enabled
 
           steps.each do |action_klass|
             @runner.add_action(action_klass)

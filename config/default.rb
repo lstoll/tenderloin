@@ -18,4 +18,7 @@ Tenderloin::Config.run do |config|
 
   config.provisioning.script = nil
   config.provisioning.command = nil
+
+  config.shared_folders.enabled = true
+  config.shared_folders.folders = []
 end

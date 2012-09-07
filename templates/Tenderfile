@@ -15,4 +15,9 @@ Tenderloin::Config.run do |config|
 # ls /usr
 # EOF
   # config.provisioning.command = "apt-get install -y ruby"
+
+  ## Shared folders are enabled by default, and the project dir is always shared
+  ## You can turn this off, or add additional folders
+  # config.shared_folders.enabled = false
+  # config.shared_folders.folders = [[["my-files", "src", "/mnt/src"], ["bin-files", "bin", "/mnt/bin"]
 end

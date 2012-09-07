@@ -104,12 +104,18 @@ module Tenderloin
       end
     end
 
+    class SharedFoldersConfig
+      attr_accessor :enabled
+      attr_accessor :folders
+    end
+
     class Top < Base
       attr_reader :package
       attr_reader :ssh
       attr_reader :vm
       attr_reader :tenderloin
       attr_reader :provisioning
+      attr_reader :shared_folders
 
       def initialize
         @ssh = SSHConfig.new
@@ -117,6 +123,7 @@ module Tenderloin
         @tenderloin = TenderloinConfig.new
         @package = PackageConfig.new
         @provisioning = ProvisioningConfig.new
+        @shared_folders = SharedFoldersConfig.new
 
         @loaded = false
       end
