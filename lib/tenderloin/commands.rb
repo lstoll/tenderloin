@@ -143,6 +143,13 @@ error
         box.destroy
       end
 
+      # Runs the provisioning script
+      def provision
+        Env.load!
+        Env.require_persisted_vm
+        Env.persisted_vm.execute!(Actions::VM::Provision)
+      end
+
       private
 
       def act_on_vm(&block)

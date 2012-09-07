@@ -18,8 +18,8 @@ module Tenderloin
         end
       end
 
-      def upload!(from, to)
-        execute do |ssh|
+      def upload!(ip, from, to)
+        execute(ip) do |ssh|
           scp = Net::SCP.new(ssh)
           scp.upload!(from, to)
         end

@@ -5,4 +5,14 @@ Tenderloin::Config.run do |config|
 
   # Every Tenderloin virtual environment requires a box to build off of.
   config.vm.box = "base"
+
+  ## SSH username and password defaults to 'tenderloin'. You can change this.
+  # config.ssh.username = 'youruser'
+  # config.ssh.password = 'yourpass'
+
+  ## Provisioning can either provide a shell script, or a command to execute
+  # config.provisioning.script = <<EOF
+# ls /usr
+# EOF
+  # config.provisioning.command = "apt-get install -y ruby"
 end

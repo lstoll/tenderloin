@@ -16,11 +16,6 @@ Tenderloin::Config.run do |config|
   config.package.name = 'tenderloin'
   config.package.extension = '.box'
 
-  config.chef.enabled = false
-  config.chef.cookbooks_path = "cookbooks"
-  config.chef.provisioning_path = "/tmp/tenderloin-chef"
-  config.chef.json = {
-    :instance_role => "tenderloin",
-    :recipes => ["tenderloin_main"]
-  }
+  config.provisioning.script = nil
+  config.provisioning.command = nil
 end

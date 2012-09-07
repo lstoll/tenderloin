@@ -86,25 +86,6 @@ module Tenderloin
       attr_accessor :extension
     end
 
-    class ChefConfig < Base
-      attr_accessor :cookbooks_path
-      attr_accessor :provisioning_path
-      attr_accessor :json
-      attr_accessor :enabled
-
-      def initialize
-        @enabled = false
-      end
-
-      def to_json
-        # Overridden so that the 'json' key could be removed, since its just
-        # merged into the config anyways
-        data = instance_variables_hash
-        data.delete(:json)
-        data.to_json
-      end
-    end
-
     class TenderloinConfig < Base
       attr_accessor :dotfile_name
       attr_accessor :log_output
@@ -115,19 +96,27 @@ module Tenderloin
       end
     end
 
+    class ProvisioningConfig
+      attr_accessor :script
+      attr_accessor :command
+      def enabled
+        script || command
+      end
+    end
+
     class Top < Base
       attr_reader :package
       attr_reader :ssh
       attr_reader :vm
-      attr_reader :chef
       attr_reader :tenderloin
+      attr_reader :provisioning
 
       def initialize
         @ssh = SSHConfig.new
         @vm = VMConfig.new
-        @chef = ChefConfig.new
         @tenderloin = TenderloinConfig.new
         @package = PackageConfig.new
+        @provisioning = ProvisioningConfig.new
 
         @loaded = false
       end

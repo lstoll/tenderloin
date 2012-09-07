@@ -17,7 +17,7 @@ msg
           # Up is a "meta-action" so it really just queues up a bunch
           # of other actions in its place:
           steps = [Import, SharedFolders, Boot]
-          steps << Provision if Tenderloin.config.chef.enabled
+          steps << Provision if Tenderloin.config.provisioning.enabled
           steps.insert(0, MoveHardDrive) if Tenderloin.config.vm.hd_location
 
           steps.each do |action_klass|

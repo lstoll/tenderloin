@@ -49,6 +49,12 @@ module Tenderloin
       Tenderloin::Commands.reload
     end
 
+    desc "provision [--file <tenderfile>]", "Runs the provisioning script"
+    def provision()
+      setup
+      Tenderloin::Commands.provision
+    end
+
     desc "ssh [--file <tenderfile>]", "SSH's in to the VM"
     def ssh()
       setup
