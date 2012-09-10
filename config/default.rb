@@ -6,6 +6,7 @@ Tenderloin::Config.run do |config|
 
   config.ssh.username = "tenderloin"
   config.ssh.password = "tenderloin"
+  config.ssh.key = nil
   # config.ssh.host = "localhost"
   config.ssh.max_tries = 10
   config.ssh.timeout = 30

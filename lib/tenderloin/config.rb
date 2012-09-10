@@ -59,6 +59,7 @@ module Tenderloin
       attr_accessor :host
       attr_accessor :max_tries
       attr_accessor :timeout
+      attr_accessor :key
     end
 
     class VMConfig < Base
