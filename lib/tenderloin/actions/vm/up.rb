@@ -46,6 +46,7 @@ msg
             data.delete "ethernet1.generatedAddress"
             data.delete "ethernet0.generatedAddressOffset"
             data.delete "ethernet1.generatedAddressOffset"
+            data.delete 'displayname'
             data['displayName'] = "tenderloin-" + @runner.vm_id
           end
         end
