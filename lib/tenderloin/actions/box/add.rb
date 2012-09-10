@@ -15,6 +15,7 @@ module Tenderloin
 
           @runner.add_action(Download)
           @runner.add_action(Unpackage)
+          @runner.add_action(Convert)
         end
       end
     end
