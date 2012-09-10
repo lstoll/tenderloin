@@ -1,3 +1,5 @@
+require 'timeout'
+
 module Tenderloin
   module Actions
     module VM
@@ -29,8 +31,14 @@ module Tenderloin
             logger.info "Creating shared folders metadata..."
 
             shared_folders.each do |name, hostpath, guestpath|
-              @runner.fusion_vm.share_folder(name, File.expand_path(hostpath))
-              @runner.fusion_vm.enable_shared_folders
+              begin
+                status = Timeout::timeout(10) {
+                  @runner.fusion_vm.share_folder(name, File.expand_path(hostpath))
+                  @runner.fusion_vm.enable_shared_folders
+                }
+              rescue Timeout::Error
+                logger.warn "Sharing folder #{name} timed out"
+              end
             end
 
             logger.info "Linking shared folders..."
