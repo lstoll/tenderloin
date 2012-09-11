@@ -7,6 +7,7 @@ Tenderloin::Config.run do |config|
   config.ssh.username = "tenderloin"
   config.ssh.password = "tenderloin"
   config.ssh.key = nil
+  config.ssh.port = 22
   # config.ssh.host = "localhost"
   config.ssh.max_tries = 10
   config.ssh.timeout = 30
@@ -19,6 +20,7 @@ Tenderloin::Config.run do |config|
 
   config.provisioning.script = nil
   config.provisioning.command = nil
+  config.provisioning.rsync = nil
 
   config.shared_folders.enabled = true
   config.shared_folders.folders = []

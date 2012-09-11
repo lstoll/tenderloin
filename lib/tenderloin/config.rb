@@ -60,6 +60,7 @@ module Tenderloin
       attr_accessor :max_tries
       attr_accessor :timeout
       attr_accessor :key
+      attr_accessor :port
     end
 
     class VMConfig < Base
@@ -100,8 +101,9 @@ module Tenderloin
     class ProvisioningConfig
       attr_accessor :script
       attr_accessor :command
+      attr_accessor :rsync
       def enabled
-        script || command
+        script || command || rsync
       end
     end
 

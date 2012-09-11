@@ -72,7 +72,7 @@ error
       def ssh
         Env.load!
         Env.require_persisted_vm
-        SSH.connect :host => Env.persisted_vm.fusion_vm.ip
+        SSH.connect Env.persisted_vm.fusion_vm.ip
       end
 
       # Halts a running tenderloin instance. This forcibly halts the instance;

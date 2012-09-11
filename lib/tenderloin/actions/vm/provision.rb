@@ -3,8 +3,18 @@ module Tenderloin
     module VM
       class Provision < Base
         def execute!
+          run_rsync if Tenderloin.config.provisioning.rsync
           setup_script if Tenderloin.config.provisioning.script
           run_command if Tenderloin.config.provisioning.command
+        end
+
+        def run_rsync
+          logger.info "Running rsync"
+          src, dst = *Tenderloin.config.provisioning.rsync
+          SSH.execute(@runner.fusion_vm.ip) do |ssh|
+            ssh.exec!("mkdir -p #{dst}")
+          end
+          logger.info SSH.rsync(@runner.fusion_vm.ip, File.expand_path(src), File.expand_path(dst))
         end
 
         def setup_script
