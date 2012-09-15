@@ -12,14 +12,18 @@ Tenderloin::Config.run do |config|
   # config.ssh.password = 'yourpass'
   # config.ssh.key = '~/.ssh/id_rsa'
 
-  ## Provisioning can either provide a shell script, or a command to execute
+  ## Provisioning can either provide a shell script, or a command to execute.
+  ## You can also provide folders to rsync (over SSH)
   # config.provisioning.script = <<EOF
 # ls /usr
 # EOF
   # config.provisioning.command = "apt-get install -y ruby"
+  ## This is destructive - it uses the --delete flag
+  # config.provisioning.rsync << ["src/", "dst"]
 
   ## Shared folders are enabled by default, and the project dir is always shared
   ## You can turn this off, or add additional folders
   # config.shared_folders.enabled = false
-  # config.shared_folders.folders = [[["my-files", "src", "/mnt/src"], ["bin-files", "bin", "/mnt/bin"]
+  # config.shared_folders.folders << ["my-files", "src", "/mnt/src"]
+  # config.shared_folders.folders << ["bin-files", "bin", "/mnt/bin"]
 end

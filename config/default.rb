@@ -20,7 +20,7 @@ Tenderloin::Config.run do |config|
 
   config.provisioning.script = nil
   config.provisioning.command = nil
-  config.provisioning.rsync = nil
+  config.provisioning.rsync = []
 
   config.shared_folders.enabled = true
   config.shared_folders.folders = []

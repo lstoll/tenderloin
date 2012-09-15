@@ -9,12 +9,14 @@ module Tenderloin
         end
 
         def run_rsync
-          logger.info "Running rsync"
-          src, dst = *Tenderloin.config.provisioning.rsync
-          SSH.execute(@runner.fusion_vm.ip) do |ssh|
-            ssh.exec!("mkdir -p #{dst}")
+          logger.info "Running rsync..."
+          Tenderloin.config.provisioning.rsync.each do |rsync|
+            src, dst = *rsync
+            SSH.execute(@runner.fusion_vm.ip) do |ssh|
+              ssh.exec!("mkdir -p #{dst}")
+            end
+            logger.info SSH.rsync(@runner.fusion_vm.ip, File.expand_path(src), File.expand_path(dst))
           end
-          logger.info SSH.rsync(@runner.fusion_vm.ip, File.expand_path(src), File.expand_path(dst))
         end
 
         def setup_script

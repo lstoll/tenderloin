@@ -103,7 +103,7 @@ module Tenderloin
       attr_accessor :command
       attr_accessor :rsync
       def enabled
-        script || command || rsync
+        script || command || !rsync.empty?
       end
     end
 
