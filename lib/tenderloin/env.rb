@@ -11,7 +11,10 @@ module Tenderloin
     extend Tenderloin::Util
 
     class << self
-      def box; @@box; end
+      def box
+        load_box! unless @@box
+        @@box
+      end
       def persisted_vm; @@persisted_vm; end
       def root_path; @@root_path; end
       def dotfile_path
@@ -127,7 +130,7 @@ No base box was specified! A base box is required as a staring point
 for every tenderloin virtual machine. Please specify one in your Tenderfile
 using `config.vm.box`
 msg
-          else
+          elsif !Tenderloin.config.vm.box_url
             error_and_exit(<<-msg)
 Specified box `#{Tenderloin.config.vm.box}` does not exist!
 

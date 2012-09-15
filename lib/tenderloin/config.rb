@@ -65,6 +65,7 @@ module Tenderloin
 
     class VMConfig < Base
       attr_accessor :box
+      attr_accessor :box_url
       attr_accessor :box_vmx
       attr_accessor :project_directory
       attr_accessor :hd_location

@@ -16,6 +16,7 @@ msg
 
           # Up is a "meta-action" so it really just queues up a bunch
           # of other actions in its place:
+          Tenderloin::Box.add(Tenderloin.config.vm.box, Tenderloin.config.vm.box_url) unless Tenderloin::Env.box
           steps = [Import, SharedFolders, Boot]
           steps << Provision if Tenderloin.config.provisioning.enabled
           steps.insert(0, MoveHardDrive) if Tenderloin.config.vm.hd_location

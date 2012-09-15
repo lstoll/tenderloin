@@ -5,6 +5,8 @@ Tenderloin::Config.run do |config|
 
   # Every Tenderloin virtual environment requires a box to build off of.
   config.vm.box = "base"
+  # You can optionally specify a path or URL to automatically retrieve it from
+  # config.vm.box_url = "http://download"
 
   ## SSH username and password defaults to 'tenderloin'. You can change this.
   ## If you provide a key, this will be used over the password
