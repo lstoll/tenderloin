@@ -7,6 +7,13 @@ the simplest, and provided a good starting point
 
 It is designed to use VMWare Fusion as the underlying provider. You will need Fusion 5.
 
+Features:
+
+* Shared folders
+* Provisioning via command or script
+* Imports Vagrant boxes
+* Sync data via rsync (Allows target VMs to not have tools)
+
 ## Quick Start
 
     gem install tenderloin
@@ -20,7 +27,7 @@ To build your first virtual environment:
 The file describing your VM is called 'Tenderfile', but you can optionally change this with
 the -f flag, to allow multiple VM descriptions in the same place.
 
-## Builsding base boxes
+## Building base boxes
 
 Currently base boxes are built manually. The process:
 
