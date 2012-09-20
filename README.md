@@ -40,7 +40,7 @@ You can also set up paths to rsync using the provisioner, these wil be synced wi
 
 ## Tenderfile
 
-You can [view the template](templates/Tenderfile) to see all available options.
+You can [view the template](tenderloin/tree/master/templates/Tenderfile) to see all available options.
 
 ## Project status
 
