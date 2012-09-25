@@ -18,7 +18,9 @@ module Tenderloin
       def persisted_vm; @@persisted_vm; end
       def root_path; @@root_path; end
       def dotfile_path
-        File.join(root_path, "." + $ROOTFILE_NAME + ".loinstate")
+        loinsplit = File.split($ROOTFILE_NAME)
+        loinsplit[-1] = "." + loinsplit[-1] + ".loinstate"
+        File.join(root_path, *loinsplit)
       end
       def home_path; File.expand_path(Tenderloin.config.tenderloin.home); end
       def tmp_path; File.join(home_path, "tmp"); end
