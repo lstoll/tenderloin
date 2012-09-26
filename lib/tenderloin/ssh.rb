@@ -7,7 +7,7 @@ module Tenderloin
         if options.key
           Kernel.exec "#{cmd_ssh_opts} #{options.username}@#{ip}"
         else
-          Kernel.exec cmd_ssh_opts.strip
+          Kernel.exec cmd_ssh_opts(ip).strip
         end
       end
 
@@ -49,11 +49,11 @@ module Tenderloin
         Tenderloin.config.ssh
       end
 
-      def cmd_ssh_opts
+      def cmd_ssh_opts(ip=nil)
         if options.key
           "ssh -i #{options.key} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p #{options.port}"
         else
-          "#{SCRIPT} #{options.username} #{options.password} #{options.host} #{options.port}".strip
+          "#{SCRIPT} #{options.username} #{options.password} #{options.host || ip} #{options.port}".strip
         end
       end
 
