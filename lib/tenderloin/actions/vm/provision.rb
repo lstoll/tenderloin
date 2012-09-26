@@ -9,8 +9,8 @@ module Tenderloin
         end
 
         def run_rsync
-          logger.info "Running rsync..."
           Tenderloin.config.provisioning.rsync.each do |rsync|
+            logger.info "Running rsync for #{rsync.join(' -> ')}..."
             src, dst = *rsync
             SSH.execute(@runner.fusion_vm.ip) do |ssh|
               ssh.exec!("mkdir -p #{dst}")
