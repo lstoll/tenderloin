@@ -31,13 +31,16 @@ module Tenderloin
             logger.info "Creating shared folders metadata..."
 
             shared_folders.each do |name, hostpath, guestpath|
-              begin
-                status = Timeout::timeout(10) {
-                  @runner.fusion_vm.share_folder(name, File.expand_path(hostpath))
-                  @runner.fusion_vm.enable_shared_folders
-                }
-              rescue Timeout::Error
-                logger.warn "Sharing folder #{name} timed out"
+              for i in 0..3
+                begin
+                  status = Timeout::timeout(10) {
+                    @runner.fusion_vm.share_folder(name, File.expand_path(hostpath))
+                    @runner.fusion_vm.enable_shared_folders
+                    break
+                  }
+                rescue Timeout::Error
+                  logger.warn "Sharing folder #{name} timed out"
+                end
               end
             end
 
