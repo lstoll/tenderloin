@@ -60,6 +60,12 @@ module Tenderloin
       attr_accessor :max_tries
       attr_accessor :timeout
       attr_accessor :key
+      def keys=(keys)
+        @keys=keys
+      end
+      def keys
+        @keys || (key ? [key] : nil)
+      end
       attr_accessor :port
     end
 

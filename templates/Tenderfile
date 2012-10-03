@@ -13,6 +13,8 @@ Tenderloin::Config.run do |config|
   # config.ssh.username = 'youruser'
   # config.ssh.password = 'yourpass'
   # config.ssh.key = '~/.ssh/id_rsa'
+  ## SSH key can also be an array of keys
+  # config.ssh.keys = ['~/.ssh/id_rsa', '~/.ssh/id_rsa_other']
 
   ## Provisioning can either provide a shell script, or a command to execute.
   ## You can also provide folders to rsync (over SSH)

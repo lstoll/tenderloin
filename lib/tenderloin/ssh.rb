@@ -4,7 +4,7 @@ module Tenderloin
 
     class << self
       def connect(ip)
-        if options.key
+        if options.keys
           Kernel.exec "#{cmd_ssh_opts} #{options.username}@#{ip}"
         else
           Kernel.exec cmd_ssh_opts(ip).strip
@@ -50,8 +50,9 @@ module Tenderloin
       end
 
       def cmd_ssh_opts(ip=nil)
-        if options.key
-          "ssh -i #{options.key} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p #{options.port}"
+        if options.keys
+          keyopts = options.keys.map {|k| "-i #{File.expand_path(k)}"}.join(' ')
+          "ssh #{keyopts} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p #{options.port}"
         else
           "#{SCRIPT} #{options.username} #{options.password} #{options.host || ip} #{options.port}".strip
         end
@@ -62,7 +63,7 @@ module Tenderloin
         opts[:port] = Tenderloin.config.ssh.port
         opts[:password] = Tenderloin.config.ssh.password
         opts[:timeout] = Tenderloin.config.ssh.timeout
-        opts[:keys] = [Tenderloin.config[:ssh][:key]] if Tenderloin.config[:ssh][:key]
+        opts[:keys] = Tenderloin.config[:ssh][:keys] if Tenderloin.config[:ssh][:keys]
         opts
       end
     end
