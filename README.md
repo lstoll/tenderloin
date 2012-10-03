@@ -48,6 +48,8 @@ This project is currently still in a pretty raw state. It is a quick hack to see
 
 ## Building base boxes
 
+*Note:* [Veewee](https://github.com/jedi4ever/veewee) supports building bases boxes with VMWare. The VMDK from this can be used in a Tenderloin box. More automation around this coming soon!
+
 Currently base boxes are built manually. The process:
 
 * Create image in Fusion
