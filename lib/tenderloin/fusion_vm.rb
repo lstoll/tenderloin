@@ -7,16 +7,17 @@ module Tenderloin
     end
 
     def run(cmd, opts='')
+      runcmd = "#{VMRUN} #{cmd} #{@vmx} #{opts}"
       retrycount = 0
       while true
-        res = `#{VMRUN} #{cmd} #{@vmx} #{opts}`
+        res = `#{runcmd}`
         if $? == 0
           return res
         else
           if res =~ /VMware Tools are not running/
             sleep 1; next unless retrycount > 10
           end
-          raise "Error running vmrun command #{cmd}: " + res
+          raise "Error running vmrun command:\n#{runcmd}\nResponse: " + res
         end
       end
     end
