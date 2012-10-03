@@ -9,7 +9,7 @@ module Tenderloin
         # For now we read the contents of one into a buffer
         # and copy it into the other. In the future, we should do
         # a system-level file copy (FileUtils.cp).
-        open(source_url) do |f|
+        open(::File.expand_path(source_url)) do |f|
           loop do
             break if f.eof?
             destination_file.write(f.read(BUFFERSIZE))
