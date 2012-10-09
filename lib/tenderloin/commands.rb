@@ -150,6 +150,13 @@ error
         Env.persisted_vm.execute!(Actions::VM::Provision)
       end
 
+      # Gets the IP
+      def show_ip
+        Env.load!
+        Env.require_persisted_vm
+        puts Env.persisted_vm.fusion_vm.ip
+      end
+
       private
 
       def act_on_vm(&block)

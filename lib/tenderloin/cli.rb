@@ -61,5 +61,11 @@ module Tenderloin
       Tenderloin::Commands.ssh
     end
 
+    desc "ip [--file <tenderfile>]", "Shows the IP to access the VM"
+    def ip()
+      setup
+      Tenderloin::Commands.show_ip
+    end
+
   end
 end
