@@ -105,7 +105,7 @@ module Tenderloin
       end
     end
 
-    class ProvisioningConfig
+    class ProvisioningConfig < Base
       attr_accessor :script
       attr_accessor :command
       attr_accessor :rsync
@@ -114,7 +114,7 @@ module Tenderloin
       end
     end
 
-    class SharedFoldersConfig
+    class SharedFoldersConfig < Base
       attr_accessor :enabled
       attr_accessor :folders
     end
@@ -144,6 +144,20 @@ module Tenderloin
 
       def loaded!
         @loaded = true
+      end
+
+      def to_hash
+        hsh = Tenderloin.config.instance_variables_hash
+        hsh.delete(:tenderloin)
+        hsh = hsh.inject({}) do |h, (k, iv)|
+          if iv.class.to_s =~ /Tenderloin::Config/
+            h[k] = iv.instance_variables_hash
+          else
+            h[k] = iv
+          end
+          h
+        end
+        hsh
       end
     end
   end

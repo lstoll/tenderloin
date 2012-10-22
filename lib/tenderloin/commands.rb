@@ -157,6 +157,19 @@ error
         puts Env.persisted_vm.fusion_vm.ip
       end
 
+      def json_dump
+        # Bump log level, don't want other output
+        Tenderloin::Logger.set_level Logger::ERROR
+        Env.load!
+        ret = {:config => Tenderloin.config.to_hash}
+        if Env.persisted_vm
+          ret[:vm] = Env.persisted_vm.fusion_vm.to_hash
+        else
+          ret[:vm] = {:running => false}
+        end
+        puts ret.to_json
+      end
+
       private
 
       def act_on_vm(&block)

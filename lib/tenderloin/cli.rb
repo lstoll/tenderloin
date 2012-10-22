@@ -67,5 +67,11 @@ module Tenderloin
       Tenderloin::Commands.show_ip
     end
 
+    desc "jsondump [--file <tenderfile>]", "Dumps a JSON representation of the VM"
+    def jsondump
+      setup
+      Tenderloin::Commands.json_dump
+    end
+
   end
 end

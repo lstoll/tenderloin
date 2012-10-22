@@ -87,5 +87,9 @@ module Tenderloin
       end
       mac_ip
     end
+
+    def to_hash
+      {:ip => ip, :running => running?}
+    end
   end
 end
