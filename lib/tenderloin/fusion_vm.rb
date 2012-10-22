@@ -13,6 +13,8 @@ module Tenderloin
         res = `#{runcmd}`
         if $? == 0
           return res
+        elsif res =~ /The virtual machine is not powered on/
+          return
         else
           if res =~ /VMware Tools are not running/
             sleep 1; next unless retrycount > 10
@@ -51,8 +53,10 @@ module Tenderloin
     end
 
     def ip
-      ip = get_guest_var('ip').strip
-      unless ip =~ /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/
+      ip = get_guest_var('ip')
+      if ip && ip.strip =~ /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/
+        ip = ip.strip
+      else
         mac_address = VMXFile.load(@vmx)["ethernet0.generatedAddress"]
         ip = dhcp_leases[mac_address]
       end
