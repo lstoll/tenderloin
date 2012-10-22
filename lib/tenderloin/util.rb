@@ -27,15 +27,23 @@ error
 
   class Logger < ::Logger
     @@singleton_logger = nil
+    @@level = Logger::INFO
 
     class << self
+      def set_level(level)
+        @@singleton_logger.level = level if @@singleton_logger
+        @@level = level
+      end
+
       def singleton_logger
         # TODO: Buffer messages until config is loaded, then output them?
-        if Tenderloin.config.loaded?
-          @@singleton_logger ||= Tenderloin::Logger.new(Tenderloin.config.tenderloin.log_output)
-        else
-          Tenderloin::Logger.new(nil)
-        end
+        logger = if Tenderloin.config.loaded?
+                   @@singleton_logger ||= Tenderloin::Logger.new(Tenderloin.config.tenderloin.log_output)
+                 else
+                   Tenderloin::Logger.new(nil)
+                 end
+        logger.level = @@level
+        logger
       end
 
       def reset_logger!
@@ -48,4 +56,3 @@ error
     end
   end
 end
-
