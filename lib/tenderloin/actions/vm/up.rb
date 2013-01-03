@@ -18,7 +18,7 @@ msg
           # of other actions in its place:
           Tenderloin::Box.add(Tenderloin.config.vm.box, Tenderloin.config.vm.box_url) unless Tenderloin::Env.box
           steps = [Import, SharedFolders, Boot]
-          steps << Provision if Tenderloin.config.provisioning.enabled
+          steps << Provision if provision_enabled?
           steps.insert(0, MoveHardDrive) if Tenderloin.config.vm.hd_location
 
           steps.each do |action_klass|
@@ -50,6 +50,10 @@ msg
             data.delete 'displayname'
             data['displayName'] = "tenderloin-" + @runner.vm_id
           end
+        end
+
+        def provision_enabled?
+          Tenderloin.config.provisioning.enabled && !run_args.include?(:no_provision)
         end
       end
     end

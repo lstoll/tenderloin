@@ -12,10 +12,16 @@ module Tenderloin
       end
     end
 
-    desc "up [--file <tenderfile>]", "Boots the VM"
+    desc "up [--file <tenderfile> --no-provision]", "Boots the VM"
+    method_option :provision, :default => true
     def up()
       setup
-      Tenderloin::Commands.up
+
+      if !options[:provision]
+        Tenderloin::Commands.up(:no_provision)
+      else
+        Tenderloin::Commands.up
+      end
     end
 
     desc "halt [--file <tenderfile>]", "Force shuts down the running VM"
