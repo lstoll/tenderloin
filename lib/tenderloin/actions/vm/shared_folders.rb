@@ -30,12 +30,16 @@ module Tenderloin
           if Tenderloin.config.shared_folders.enabled
             logger.info "Creating shared folders metadata..."
 
+            # Enable Shared Folders. It fails if it's already enabled.
+            # If it's a real error the command to add a shared folder will fail,
+            # so we can ignore this one.
+            @runner.fusion_vm.enable_shared_folders rescue nil
+
             shared_folders.each do |name, hostpath, guestpath|
-              for i in 0..3
+              4.times do
                 begin
-                  status = Timeout::timeout(10) {
+                  Timeout::timeout(10) {
                     @runner.fusion_vm.share_folder(name, File.expand_path(hostpath))
-                    @runner.fusion_vm.enable_shared_folders
                     break
                   }
                 rescue Timeout::Error
