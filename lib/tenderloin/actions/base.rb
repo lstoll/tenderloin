@@ -24,7 +24,8 @@ module Tenderloin
     # documentation below.
     class Base
       # The {Runner runner} which is executing the action
-      attr_reader :runner
+      # The {Array arguments} which are passed when executing the action
+      attr_reader :runner, :run_args
 
       # Included so subclasses don't need to include it themselves.
       include Tenderloin::Util
@@ -33,7 +34,8 @@ module Tenderloin
       # been given to the {Runner runner}. This method can be used by subclasses
       # to save any of the configuration options which are passed in.
       def initialize(runner, *args)
-        @runner = runner
+        @runner   = runner
+        @run_args = args
       end
 
       # This method is called once per action, allowing the action

@@ -95,4 +95,16 @@ class UpActionTest < Test::Unit::TestCase
       @action.setup_mac_address
     end
   end
+
+  context "booting without provisioning" do
+    should "not add the provision task to the expected sequence" do
+      mock_vm, vm, action = mock_action(Tenderloin::Actions::VM::Up, :no_provision)
+
+      mock_config do |config|
+        config.chef.enabled = true
+      end
+
+      action.should_not be_provision_enabled
+    end
+  end
 end

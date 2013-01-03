@@ -28,7 +28,7 @@ error
       # the base VM, setting up shared folders, forwarded ports, etc to
       # provisioning the instance with chef. {up} also starts the instance,
       # running it in the background.
-      def up
+      def up(provision = nil)
         Env.load!
 
         if Env.persisted_vm
@@ -36,7 +36,7 @@ error
           Env.persisted_vm.start
         else
           Env.require_box
-          VM.execute!(Actions::VM::Up)
+          VM.execute!(Actions::VM::Up, provision)
         end
       end
 
