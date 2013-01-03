@@ -3,7 +3,33 @@ module Tenderloin
     SCRIPT = File.join(File.dirname(__FILE__), '..', '..', 'script', 'tenderloin-ssh-expect.sh')
 
     class << self
-      def connect(ip)
+      def connect(ip, command = nil)
+        if command
+          remote_exec(ip, command)
+        else
+          ssh_connect(ip)
+        end
+      end
+
+      def remote_exec(ip, command)
+        execute(ip) do |ssh|
+          ssh.open_channel do |channel|
+            channel.exec command do |ch, success|
+              raise "could not execute remote command: #{command}" unless success
+
+              ch.on_data do |c, data|
+                STDOUT.print data
+              end
+
+              ch.on_extended_data do |c, type, data|
+                STDERR.print data
+              end
+            end
+          end
+        end
+      end
+
+      def ssh_connect(ip)
         if options.keys
           Kernel.exec "#{cmd_ssh_opts} #{options.username}@#{ip}"
         else

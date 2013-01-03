@@ -69,10 +69,12 @@ error
       #
       # This command requires that an instance already be brought up with
       # `tenderloin up`.
-      def ssh
+      #
+      # Command: shell command to run on the remote host
+      def ssh(command)
         Env.load!
         Env.require_persisted_vm
-        SSH.connect Env.persisted_vm.fusion_vm.ip
+        SSH.connect Env.persisted_vm.fusion_vm.ip, command
       end
 
       # Halts a running tenderloin instance. This forcibly halts the instance;
