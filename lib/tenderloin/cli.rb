@@ -61,10 +61,11 @@ module Tenderloin
       Tenderloin::Commands.provision
     end
 
-    desc "ssh [--file <tenderfile>]", "SSH's in to the VM"
+    desc "ssh [--file <tenderfile> --command <ssh command>]", "SSH's in to the VM"
+    method_option :command, :aliases => "-c"
     def ssh()
       setup
-      Tenderloin::Commands.ssh
+      Tenderloin::Commands.ssh(options[:command])
     end
 
     desc "ip [--file <tenderfile>]", "Shows the IP to access the VM"
