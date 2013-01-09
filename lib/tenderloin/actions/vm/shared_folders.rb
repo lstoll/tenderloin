@@ -14,12 +14,13 @@ module Tenderloin
           # also verify that the host path exists, the name is valid,
           # and that the guest path is valid.
           shared_folders.collect do |folder|
-            if folder.is_a?(Array) && folder.length == 3
+            if folder.is_a?(Array) && [2, 3].include?(folder.length)
               folder
             else
+              logger.warn("Ignoring invalid shared folder: #{folder}")
               nil
             end
-          end#.compact
+          end.compact
         end
 
         def before_boot
@@ -52,7 +53,10 @@ module Tenderloin
 
             Tenderloin::SSH.execute(@runner.fusion_vm.ip) do |ssh|
               shared_folders.each do |name, hostpath, guestpath|
+                next unless guestpath
+
                 logger.info "-- #{name}: #{guestpath}"
+                ssh.exec!("sudo rm -rf #{guestpath}")
                 ssh.exec!("sudo ln -s /mnt/hgfs/#{name} #{guestpath}")
                 ssh.exec!("sudo chown #{Tenderloin.config.ssh.username} #{guestpath}")
               end
