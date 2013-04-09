@@ -1,14 +1,1 @@
-pkg/*
-Vagrantfile
-.vagrant
-.bundle
-*.lock
-cookbooks/*
-_site/*
-!templates/*
-*.org
-.yardoc/
-doc/
-*.loinstate
-example.loin
-/*.gem
+
